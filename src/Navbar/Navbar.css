@@ -1,0 +1,79 @@
+body {
+    
+    min-height: 100vh;
+}
+
+.head {
+    display: flex;
+    grid-gap: 1.3rem;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
+.head>input {
+    max-width: 130px;
+    padding: 9px 12px;
+    border-radius: 6px;
+    border: 2px solid #ddd;
+    outline: none;
+}
+.head select {
+    background: #fff;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    outline: none;
+    cursor: pointer;
+}
+.head .color {
+    background: #fff;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    outline: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    grid-gap: 6px;
+    padding: 4px 13px;
+}
+.head .color span {
+    font-size: 14px;
+}
+.head .color input {
+    border: none;
+    padding: 0;
+    width: 26px;
+    height: 26px;
+    background: #fff;
+    border-radius:50%;
+    cursor: pointer;
+}
+
+ .head .color input::-moz-color-swatch {
+    width: 20px;
+    height: 20px;
+    border: none;
+    border-radius: 50%;
+    
+}
+.Icons__container{
+    display:flex;
+    grid-gap:1.5rem;
+    flex-wrap: wrap;
+}
+button{
+    background:transparent;
+    outline:none;
+    border:1px solid #eee;
+    display:flex;
+    align-items:center;
+    padding:6px;
+    justify-content: center;
+    cursor:pointer;
+    transition:linear 0.14s;
+    border-radius:5px;
+
+}
+button:hover{
+    color:rgb(143, 241, 164);
+    border:1px solid rgb(143, 143, 241);
+}
