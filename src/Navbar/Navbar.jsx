@@ -20,147 +20,239 @@ import CancelTwoToneIcon from "@mui/icons-material/CancelTwoTone";
 import AddPhotoAlternateOutlinedIcon from "@mui/icons-material/AddPhotoAlternateOutlined";
 import FormatIndentDecreaseOutlinedIcon from "@mui/icons-material/FormatIndentDecreaseOutlined";
 import FormatIndentIncreaseOutlinedIcon from "@mui/icons-material/FormatIndentIncreaseOutlined";
+import FormatColorFillIcon from "@mui/icons-material/FormatColorFill";
+import BrushIcon from "@mui/icons-material/Brush";
+import PrintOutlinedIcon from "@mui/icons-material/PrintOutlined";
 function Navbar(props) {
   const { formatDoc } = props;
-  const [show, setShow] = useState(false);
-  const [show1, setShow1] = useState(false);
-  const [color, setColor] = useState("");
-
-  const showCode = useRef();
-
-  // props.handleColor(color);
-
+  const { handleFileChange } = props;
+  const [bgColor, setbgColor] = useState("#000");
+  const [color, setColor] = useState("#000");
+  const fontSize = { fontSize: "18px" };
+  const backgroundRef = useRef();
+  const colorRef = useRef();
+  const getFileRef = useRef();
+  function getColorRef() {
+    colorRef.current.click();
+  }
+  function getBackgroundRef() {
+    backgroundRef.current.click();
+  }
+  function handlePrint() {
+    window.print();
+  }
+  function getFile() {
+    getFileRef.current.click();
+  }
+  function addImage() {
+    // const handleImageUpload = (event) => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      const img = document.createElement("img");
+      img.src = reader.result;
+      img.className = "UploadedImageStyling";
+      img.contentEditable = false;
+      const range = window.getSelection().getRangeAt(0);
+      range.insertNode(img);
+      range.collapse(false);
+    };
+    // };
+  }
   return (
-    <div className="main__container">
-      <div class="head">
-        <input
-          type="text"
-          placeholder="Filename"
-          // value={filename}
-          onChange={(e) => props.setFilename(e.target.value)}
-          id="filename"
-        />
-        <select onChange={(e) => props.handleFileChange(e.target.value)}>
-          // ; this.selectedIndex=0"
-          <option value="" selected="" hidden="" disabled="">
-            File
-          </option>
-          <option value="new">New file</option>
-          <option value="txt">Save as txt</option>
-          <option value="pdf">Save as pdf</option>
-        </select>
-        <select onChange={(e) => formatDoc("formatBlock", e.target.value)}>
-          <option value="" selected="" hidden="" disabled="">
-            Format
-          </option>
-          <option value="h1">Heading 1</option>
-          <option value="h2">Heading 2</option>
-          <option value="h3">Heading 3</option>
-          <option value="h4">Heading 4</option>
-          <option value="h5">Heading 5</option>
-          <option value="h6">Heading 6</option>
-          <option value="p">Paragraph</option>
-        </select>
-        <select
-          onChange={(e) => {
-            formatDoc("fontSize", e.target.value);
-          }}
-        >
-          <option value="" selected="" hidden="" disabled="">
-            Font size
-          </option>
-          <option value="1">Extra small</option>
-          <option value="2">Small</option>
-          <option value="3">Regular</option>
-          <option value="4">Medium</option>
-          <option value="5">Large</option>
-          <option value="6">Extra Large</option>
-          <option value="7">Big</option>
-        </select>
-        <div class="color">
-          <span>Color</span>
-          <input
-            type="color"
-            onChange={(e) => formatDoc("foreColor", e.target.value)}
-          />
+    <div className="navbar_container">
+      <div className="toolkit">
+        <div class="head">
+          <button title="undo">
+            <UndoTwoToneIcon
+              style={fontSize}
+              onClick={() => formatDoc("undo")}
+            />
+          </button>
+          <button title="redo">
+            <RedoTwoToneIcon
+              style={fontSize}
+              onClick={() => formatDoc("redo")}
+            />
+          </button>
+          <button title="print">
+            <PrintOutlinedIcon
+              style={fontSize}
+              onClick={() => window.print()}
+            />
+          </button>
+          <select onChange={(e) => formatDoc("formatBlock", e.target.value)}>
+            <option value="" selected="" hidden="" disabled="">
+              Format
+            </option>
+            <option value="h1">Heading 1</option>
+            <option value="h2">Heading 2</option>
+            <option value="h3">Heading 3</option>
+            <option value="h4">Heading 4</option>
+            <option value="h5">Heading 5</option>
+            <option value="h6">Heading 6</option>
+            <option value="p">Paragraph</option>
+          </select>
+          <select
+            onChange={(e) => {
+              formatDoc("fontSize", e.target.value);
+            }}
+          >
+            <option value="" selected="" hidden="" disabled="">
+              Font size
+            </option>
+            <option value="1">Extra small</option>
+            <option value="2">Small</option>
+            <option value="3">Regular</option>
+            <option value="4">Medium</option>
+            <option value="5">Large</option>
+            <option value="6">Extra Large</option>
+            <option value="7">Big</option>
+          </select>
         </div>
-        <div class="color">
-          <span>Background</span>
-          <input
-            type="color"
-            onChange={(e) => formatDoc("backColor", e.target.value)}
-          />
-        </div>
-      </div>
 
-      <div className="Icons__container">
-        <button title="undo">
-          <UndoTwoToneIcon onClick={() => formatDoc("undo")} />
-        </button>
-        <button title="redo">
-          <RedoTwoToneIcon onClick={() => formatDoc("redo")} />
-        </button>
-        <button title="bold">
-          <FormatBoldTwoToneIcon onClick={() => formatDoc("bold")} />
-        </button>
-        <button title="italic">
-          <FormatItalicTwoToneIcon onClick={() => formatDoc("italic")} />
-        </button>
-        <button title="underline">
-          <FormatUnderlinedTwoToneIcon onClick={() => formatDoc("underline")} />
-        </button>
-        <button title="Align Right">
-          <StrikethroughSTwoToneIcon
-            onClick={() => formatDoc("strikeThrough")}
-          />
-        </button>
-        <button title="Align Left">
-          <FormatAlignLeftIcon onClick={() => formatDoc("justifyLeft")} />
-        </button>
-        <button title="Align center">
-          <FormatAlignCenterIcon r onClick={() => formatDoc("justifyCenter")} />
-        </button>
-        <button title="">
-          <FormatAlignRightIcon onClick={() => formatDoc("justifyRight")} />
-        </button>
-        <button title="align justify">
-          <FormatAlignJustifyIcon onClick={() => formatDoc("justifyFull")} />
-        </button>
-        <button title="Numbered List">
-          <FormatListNumberedIcon
-            onClick={() => formatDoc("insertOrderedList")}
-          />
-        </button>
-        <button title="Bullet List">
-          <FormatListBulletedIcon
-            onClick={() => formatDoc("insertUnorderedList")}
-          />
-        </button>
-        <button title="Decrease Indent">
-          <FormatIndentDecreaseOutlinedIcon
-            onClick={() => formatDoc("outdent")}
-          />
-        </button>
-        <button title="Increase Indent">
-          <FormatIndentIncreaseOutlinedIcon
-            onClick={() => formatDoc("indent")}
-          />
-        </button>
-        <button title="add Image">
-          <AddPhotoAlternateOutlinedIcon onClick={props.addImage} />
-        </button>
-        <button title="link">
-          <AddLinkSharpIcon onClick={props.addLink} />
-        </button>
-        <button title="unlink">
-          <LinkOffSharpIcon onClick={() => formatDoc("unlink")} />
-        </button>
-        <button title="look code">
-          <CodeTwoToneIcon onClick={props.handleShowCodeClick} />
-        </button>
-        <button title="cancle formatting">
-          <CancelTwoToneIcon onClick={() => formatDoc("removeFormat")} />
-        </button>
+        <div className="Icons__container ">
+          <select onChange={(e) => formatDoc("fontname", e.target.value)}>
+            <option value="Arial">Arial</option>
+            <option value="helvetica">helvetica</option>
+            <option value="Consolas">Consolas</option>
+            <option value="Courier New">Courier New</option>
+            <option value="Georgia">Georgia</option>
+            <option value="Impact">Impact</option>
+            <option value="MS Sans Serif">MS Sans Serif</option>
+            <option value="Segoe UI">Segoe UI</option>
+            <option value="Calibri">Calibri</option>
+            <option value="Fixedsys">Fixedsys</option>
+          </select>
+
+          <button title="bold">
+            <FormatBoldTwoToneIcon
+              style={fontSize}
+              onClick={() => formatDoc("bold")}
+            />
+          </button>
+          <button title="italic">
+            <FormatItalicTwoToneIcon
+              style={fontSize}
+              onClick={() => formatDoc("italic")}
+            />
+          </button>
+          <button title="underline">
+            <FormatUnderlinedTwoToneIcon
+              style={fontSize}
+              onClick={() => formatDoc("underline")}
+            />
+          </button>
+          <button title="Align Right">
+            <StrikethroughSTwoToneIcon
+              style={fontSize}
+              onClick={() => formatDoc("strikeThrough")}
+            />
+          </button>
+          <button title="Align Left">
+            <FormatAlignLeftIcon
+              style={fontSize}
+              onClick={() => formatDoc("justifyLeft")}
+            />
+          </button>
+          <button title="Align center">
+            <FormatAlignCenterIcon
+              style={fontSize}
+              onClick={() => formatDoc("justifyCenter")}
+            />
+          </button>
+          <button title="">
+            <FormatAlignRightIcon
+              style={fontSize}
+              onClick={() => formatDoc("justifyRight")}
+            />
+          </button>
+          <button title="align justify">
+            <FormatAlignJustifyIcon
+              style={fontSize}
+              onClick={() => formatDoc("justifyFull")}
+            />
+          </button>
+          <button title="Numbered List">
+            <FormatListNumberedIcon
+              style={fontSize}
+              onClick={() => formatDoc("insertOrderedList")}
+            />
+          </button>
+          <button title="Bullet List">
+            <FormatListBulletedIcon
+              style={fontSize}
+              onClick={() => formatDoc("insertUnorderedList")}
+            />
+          </button>
+          <div class="color">
+            <span>
+              <BrushIcon
+                onClick={getColorRef}
+                style={{ color: `${color}`, fontSize: "18px" }}
+              />
+            </span>
+            <input
+              style={{ display: "none" }}
+              ref={colorRef}
+              type="color"
+              onChange={(e) => {
+                formatDoc("foreColor", e.target.value),
+                  setColor(e.target.value);
+              }}
+            />
+          </div>
+          <div class="color">
+            <span>
+              <FormatColorFillIcon
+                onClick={getBackgroundRef}
+                style={{ color: `${bgColor}`, fontSize: "18px" }}
+              />
+            </span>
+            <input
+              style={{ display: "none" }}
+              // hidden
+              ref={backgroundRef}
+              type="color"
+              onChange={(e) => {
+                formatDoc("backColor", e.target.value),
+                  setbgColor(e.target.value);
+              }}
+            />
+          </div>
+          <button title="Decrease Indent">
+            <FormatIndentDecreaseOutlinedIcon
+              style={fontSize}
+              onClick={() => formatDoc("outdent")}
+            />
+          </button>
+          <button title="Increase Indent">
+            <FormatIndentIncreaseOutlinedIcon
+              style={fontSize}
+              onClick={() => formatDoc("indent")}
+            />
+          </button>
+          <button title="add Image">
+            <AddPhotoAlternateOutlinedIcon style={fontSize} onClick={getFile} />
+            <input type="file" ref={getFileRef} hidden onChange={addImage} />
+          </button>
+          <button title="link">
+            <AddLinkSharpIcon style={fontSize} onClick={props.addLink} />
+          </button>
+          <button title="unlink">
+            <LinkOffSharpIcon
+              style={fontSize}
+              onClick={() => formatDoc("unlink")}
+            />
+          </button>
+          <button title="cancle formatting">
+            <CancelTwoToneIcon
+              style={fontSize}
+              onClick={() => formatDoc("removeFormat")}
+            />
+          </button>
+        </div>
       </div>
     </div>
   );

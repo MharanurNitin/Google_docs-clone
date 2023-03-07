@@ -2,38 +2,53 @@ body {
     
     min-height: 100vh;
 }
+.navbar_container{
+    background:white;
+    width:100vw;
+    display:flex;
+    flex-direction:column;
+    position:sticky;
+    top:0;
+    left:0;
+    padding:.8rem 0;
+    /* flex-direction:column; */
+    justify-content:center;
+    align-items:center;
+}
+.toolkit{
+    display:flex;
+}
 
 .head {
     display: flex;
-    grid-gap: 1.3rem;
-    margin-bottom: 16px;
+    grid-gap: 1rem;
     flex-wrap: wrap;
+    width:fit-content;
 }
 
 .head>input {
-    max-width: 130px;
-    padding: 9px 12px;
+    max-width: 80px;
+    padding: 0px 7px;
     border-radius: 6px;
-    border: 2px solid #ddd;
+    /* border: 2px solid #ddd; */
     outline: none;
 }
-.head select {
-    background: #fff;
-    border: 2px solid #ddd;
-    border-radius: 6px;
+ select {
+    border:none;
     outline: none;
     cursor: pointer;
 }
-.head .color {
-    background: #fff;
-    border: 2px solid #ddd;
-    border-radius: 6px;
+select:hover{
+    background-color: #efefef;
+}
+ .color {
+    border:none;
     outline: none;
     cursor: pointer;
     display: flex;
     align-items: center;
-    grid-gap: 6px;
-    padding: 4px 13px;
+    grid-gap: 1px;
+    padding: 0px 7px;
 }
 .head .color span {
     font-size: 14px;
@@ -42,9 +57,6 @@ body {
     border: none;
     padding: 0;
     width: 26px;
-    height: 26px;
-    background: #fff;
-    border-radius:50%;
     cursor: pointer;
 }
 
@@ -57,23 +69,44 @@ body {
 }
 .Icons__container{
     display:flex;
-    grid-gap:1.5rem;
+    grid-gap:1rem;
     flex-wrap: wrap;
 }
 button{
     background:transparent;
     outline:none;
-    border:1px solid #eee;
+   border:none;
     display:flex;
     align-items:center;
-    padding:6px;
+   
     justify-content: center;
     cursor:pointer;
     transition:linear 0.14s;
     border-radius:5px;
+  
 
 }
+.icon{font-size:6px;}
 button:hover{
     color:rgb(143, 241, 164);
-    border:1px solid rgb(143, 143, 241);
+    font-size:8px;
+}
+@media print{
+    .navbar_container{
+        display:none;
+    }
+    #content{
+        box-shadow:none;
+        border:none;
+        width:auto;
+        margin:0;
+        padding:0;
+    }
+}
+@page {
+    margin: 1in;
+    size: A4;
+}
+.MuiSvgIcon-root{
+    font-size:12px;
 }
